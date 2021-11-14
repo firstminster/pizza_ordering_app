@@ -26,7 +26,7 @@ const CartScreen = () => {
 
   // Place Order method
   const placeOrderHandler = () => {
-    dispatch(createOrder(cart))
+    dispatch(createOrder(cartList))
     dispatch(getOrderDetails())
     history(`/order`)
   }

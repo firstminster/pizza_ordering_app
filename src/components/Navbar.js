@@ -41,7 +41,7 @@ function Navbar() {
                 </NavLink>
               </li>
 
-              <li className='nav-item'>
+              {/* <li className='nav-item'>
                 <NavLink
                   className='nav-link'
                   to='/orders/:id'
@@ -52,7 +52,7 @@ function Navbar() {
                 >
                   Orders
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
             <div className='buttons'>
               <NavLink to='/cart' className='btn btn-outline-dark ms-2'>

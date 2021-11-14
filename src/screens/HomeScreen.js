@@ -18,6 +18,8 @@ const Home = () => {
   // Fires when the component loads.
   // Dispatch an action to fetch lists of restaurants.
   useEffect(() => {
+    console.log(lng)
+    console.log(lat)
     // check an unmounted variable to tell whether
     // it should skip the call to setState
     let componentMounted = true
@@ -70,8 +72,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* Lists of each resturants */}
 
+      {/* Lists of each resturants */}
       <div>
         <div className='container my-5 py-5'>
           <div className='row'>

@@ -18,36 +18,38 @@ const PlaceOrderScreen = () => {
   // Brings in data from the global state (Redux Store)
   const orderCreate = useSelector(state => state.orderCreate)
   const { loading, order } = orderCreate
+  const cart = useSelector(state => state.cartList)
 
-  useEffect(() => {
-    //  check an unmounted variable to tell whether
-    //  it should skip the call to setState
-    let componentMounted = true
+  // useEffect(() => {
+  //   //  check an unmounted variable to tell whether
+  //   //  it should skip the call to setState
+  //   let componentMounted = true
 
-    console.log(order)
-    console.log(orderCreate)
+  //   console.log(order)
+  //   console.log(orderCreate)
 
-    const placeOrder = async () => {
-      if (componentMounted) {
-        if (loading) {
-          dispatch(createOrder(1))
-        }
-      }
-    }
-    placeOrder()
-    return () => {
-      componentMounted = false
-    }
-  }, [dispatch, order])
+  //   const placeOrder = async () => {
+  //     if (componentMounted) {
+  //       if (loading) {
+  //         dispatch(createOrder(1))
+  //       }
+  //     }
+  //   }
+  //   placeOrder()
+  //   return () => {
+  //     componentMounted = false
+  //   }
+  // }, [])
 
   // Open Order page method
   const openOrderPageHandler = () => {
     history(`/orders/${order.orderId}`)
+    // console.log(order)
   }
 
   return (
     <div className='container my-5 py-5'>
-      {/* {loading ? (
+      {/* {!order ? (
         <Message variant='danger'>
           {' '}
           Put an Item into cart and place an order!{' '}
@@ -122,35 +124,6 @@ const PlaceOrderScreen = () => {
                   <Message variant='danger'>Not Paid</Message>
                 )}
               </ListGroup.Item>
-
-              {/* <ListGroup.Item>
-                  <h2>Order Items</h2>
-                  {order.length === 0 ? (
-                    <Message>Order is empty</Message>
-                  ) : (
-                    <ListGroup variant='flush'>
-
-                      {orderDetails.orderItem.cart.map((item, index) => (
-                        <ListGroup.Item key={index}>
-                          <Row>
-                            <Col md={1}>
-                          
-                            </Col>
-                            <Col className='orderscreen__productName'>
-                              Menu item: {item.menuItemId}
-                             
-                            </Col>
-                            <Col md={4} className='orderscreen__productName'>
-                              Quantity: {item.quantity}
-                            </Col>
-                          </Row>
-                        </ListGroup.Item>
-                      ))}
-
-
-                    </ListGroup>
-                  )}
-                </ListGroup.Item> */}
             </ListGroup>
           </Col>
           <Col md={4} className='orderscreen__summary'>

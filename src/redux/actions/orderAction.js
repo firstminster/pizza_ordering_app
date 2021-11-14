@@ -11,9 +11,9 @@ import {
 // Create User Order
 export const createOrder = cart => async dispatch => {
   try {
-    dispatch({
-      type: ORDER_CREATE_REQUEST,
-    })
+    // dispatch({
+    //   type: ORDER_CREATE_REQUEST,
+    // })
 
     // Set Headers with content-Type
     const config = {
@@ -32,6 +32,8 @@ export const createOrder = cart => async dispatch => {
       type: ORDER_CREATE_SUCCESS,
       payload: data,
     })
+
+    console.log(cart)
 
     console.log(data)
   } catch (error) {

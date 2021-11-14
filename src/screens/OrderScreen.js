@@ -16,34 +16,34 @@ const OrderScreen = () => {
   const orderDetails = useSelector(state => state.orderDetails)
   const { loading, orderItem } = orderDetails
 
-  useEffect(() => {
-    //  check an unmounted variable to tell whether
-    //  it should skip the call to setState
-    let componentMounted = true
+  // useEffect(() => {
+  //   //  check an unmounted variable to tell whether
+  //   //  it should skip the call to setState
+  //   let componentMounted = true
 
-    // if (orderDetails === undefined || orderDetails.loading) {
-    //   dispatch(getOrderDetails(1))
-    // }
-    // return () => {
-    console.log(orderDetails.orderItem.orderId)
-    console.log(orderDetails.loading)
-    console.log(orderItem)
-    console.log(loading)
-    console.log(orderItem.cart)
-    // }
+  //   // if (orderDetails === undefined || orderDetails.loading) {
+  //   //   dispatch(getOrderDetails(1))
+  //   // }
+  //   // return () => {
+  //   console.log(orderDetails.orderItem.orderId)
+  //   console.log(orderDetails.loading)
+  //   console.log(orderItem)
+  //   console.log(loading)
+  //   console.log(orderItem.cart)
+  //   // }
 
-    const orderDetail = async () => {
-      if (componentMounted) {
-        if (!loading) {
-          dispatch(getOrderDetails(1))
-        }
-      }
-    }
-    orderDetail()
-    return () => {
-      componentMounted = false
-    }
-  }, [dispatch])
+  //   const orderDetail = async () => {
+  //     if (componentMounted) {
+  //       if (!loading) {
+  //         dispatch(getOrderDetails(1))
+  //       }
+  //     }
+  //   }
+  //   orderDetail()
+  //   return () => {
+  //     componentMounted = false
+  //   }
+  // }, [dispatch])
 
   // ||
   //     orderDetails === undefined ||
