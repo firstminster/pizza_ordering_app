@@ -8,7 +8,7 @@ import {
 } from '../constants/orderConstants'
 
 // Create User Order
-export const orderCreateReducer = (state = {}, action) => {
+export const orderCreateReducer = (state = { order: {} }, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
       return {
@@ -33,7 +33,7 @@ export const orderCreateReducer = (state = {}, action) => {
 }
 
 // Get created Order Details
-export const orderDetailsReducer = (state = { orderItems: [] }, action) => {
+export const orderDetailsReducer = (state = { orderItem: [] }, action) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
       return {
@@ -44,7 +44,7 @@ export const orderDetailsReducer = (state = { orderItems: [] }, action) => {
     case ORDER_DETAILS_SUCCESS:
       return {
         loading: false,
-        orderItems: action.payload,
+        orderItem: action.payload,
       }
     case ORDER_DETAILS_FAIL:
       return {

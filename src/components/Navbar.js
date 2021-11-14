@@ -11,7 +11,7 @@ function Navbar() {
     <div>
       <nav className='navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm'>
         <div className='container'>
-          <NavLink className='navbar-brand fw-bold fs-4' to='/restaurants'>
+          <NavLink className='navbar-brand fw-bold fs-4' to='/'>
             FIZZA HOT
           </NavLink>
           <button
@@ -31,7 +31,7 @@ function Navbar() {
                 <NavLink
                   className='nav-link active'
                   aria-current='page'
-                  to='/restaurants'
+                  to='/'
                   style={{
                     fontSize: '20px',
                     color: 'black',
@@ -44,13 +44,13 @@ function Navbar() {
               <li className='nav-item'>
                 <NavLink
                   className='nav-link'
-                  to='#'
+                  to='/orders/:id'
                   style={{
                     fontSize: '20px',
                     color: 'black',
                   }}
                 >
-                  About
+                  Orders
                 </NavLink>
               </li>
             </ul>

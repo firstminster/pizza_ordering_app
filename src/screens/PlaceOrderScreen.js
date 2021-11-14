@@ -1,53 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import Message from '../components/Message'
-import { getOrderDetails } from '../redux/actions/orderAction'
+import { createOrder } from '../redux/actions/orderAction'
 
-const OrderScreen = () => {
+const PlaceOrderScreen = () => {
+  // Initialize the state
   const [isDelivered, setIsDelivered] = useState(true)
   const [isPaid, setIsPaid] = useState(true)
+
+  let history = useNavigate()
 
   // calls/invokes an action
   const dispatch = useDispatch()
 
   // Brings in data from the global state (Redux Store)
-  const orderDetails = useSelector(state => state.orderDetails)
-  const { loading, orderItem } = orderDetails
+  const orderCreate = useSelector(state => state.orderCreate)
+  const { loading, order } = orderCreate
 
   useEffect(() => {
     //  check an unmounted variable to tell whether
     //  it should skip the call to setState
     let componentMounted = true
 
-    // if (orderDetails === undefined || orderDetails.loading) {
-    //   dispatch(getOrderDetails(1))
-    // }
-    // return () => {
-    console.log(orderDetails.orderItem.orderId)
-    console.log(orderDetails.loading)
-    console.log(orderItem)
-    console.log(loading)
-    console.log(orderItem.cart)
-    // }
+    console.log(order)
+    console.log(orderCreate)
 
-    const orderDetail = async () => {
+    const placeOrder = async () => {
       if (componentMounted) {
-        if (!loading) {
-          dispatch(getOrderDetails(1))
+        if (loading) {
+          dispatch(createOrder(1))
         }
       }
     }
-    orderDetail()
+    placeOrder()
     return () => {
       componentMounted = false
     }
-  }, [dispatch])
+  }, [dispatch, order])
 
-  // ||
-  //     orderDetails === undefined ||
-  //     orderDetails.cart === undefined
+  // Open Order page method
+  const openOrderPageHandler = () => {
+    history(`/orders/${order.orderId}`)
+  }
 
   return (
     <div className='container my-5 py-5'>
@@ -58,13 +54,32 @@ const OrderScreen = () => {
         </Message>
       ) : ( */}
       <>
-        <h1 className='orderscreen__title'>Order Nō: {orderItem.orderId}</h1>
+        <div>
+          <h1>Thank You! </h1>
+          <h3>You order is being processed.</h3>
+          <p
+            style={{
+              fontSize: '20px',
+              color: 'black',
+            }}
+          >
+            To view more details about your orders click the button!{' '}
+            <Button
+              type='button'
+              className='btn-block'
+              onClick={() => openOrderPageHandler()}
+            >
+              Click Me!
+            </Button>{' '}
+          </p>
+        </div>
+        <h2 className='orderscreen__title'>Order Nō: {order.orderId}</h2>
         <Row className='orderscreen'>
           <Col md={8} className='orderscreen__shipping'>
             <ListGroup variant='flush'>
               <ListGroup.Item>
-                <h2>Order Details: </h2>
-                <h5>
+                <h4>Order Details: </h4>
+                <h6>
                   Order status:{' '}
                   <span
                     style={{
@@ -74,9 +89,9 @@ const OrderScreen = () => {
                     }}
                   >
                     {' '}
-                    {orderItem.status}
+                    {order.status}
                   </span>{' '}
-                </h5>
+                </h6>
                 <p>
                   <strong>Name: </strong> Proud User
                 </p>
@@ -90,7 +105,7 @@ const OrderScreen = () => {
                 </p>
                 {isDelivered ? (
                   <Message variant='success'>
-                    Delivered on {orderItem.esitmatedDelivery}
+                    Delivered on {order.esitmatedDelivery}
                   </Message>
                 ) : (
                   <Message variant='danger'>Not Delivered</Message>
@@ -102,44 +117,40 @@ const OrderScreen = () => {
                   <strong>Method:</strong> Klarna
                 </p>
                 {isPaid ? (
-                  <Message variant='success'>
-                    Paid on {orderItem.orderedAt}
-                  </Message>
+                  <Message variant='success'>Paid on {order.orderedAt}</Message>
                 ) : (
                   <Message variant='danger'>Not Paid</Message>
                 )}
               </ListGroup.Item>
-              <ListGroup.Item>
-                <h2>Order Items</h2>
-                {orderItem.length === 0 ? (
-                  <Message>Order is empty</Message>
-                ) : (
-                  <ListGroup variant='flush'>
-                    {orderDetails.orderItem.cart.map((item, index) => (
-                      <ListGroup.Item key={index}>
-                        <Row>
-                          <Col md={1}>
-                            {/* <Image
-                            src={'item.image'}
-                            alt={'item.name'}
-                            fluid
-                            rounded
-                          /> */}
-                          </Col>
-                          <Col className='orderscreen__productName'>
-                            Menu item: {item.menuItemId}
-                            {/* <Link to={`/restaurant/${item.menuItemId}`}> */}
-                            {/* </Link> */}
-                          </Col>
-                          <Col md={4} className='orderscreen__productName'>
-                            Quantity: {item.quantity}
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                )}
-              </ListGroup.Item>
+
+              {/* <ListGroup.Item>
+                  <h2>Order Items</h2>
+                  {order.length === 0 ? (
+                    <Message>Order is empty</Message>
+                  ) : (
+                    <ListGroup variant='flush'>
+
+                      {orderDetails.orderItem.cart.map((item, index) => (
+                        <ListGroup.Item key={index}>
+                          <Row>
+                            <Col md={1}>
+                          
+                            </Col>
+                            <Col className='orderscreen__productName'>
+                              Menu item: {item.menuItemId}
+                             
+                            </Col>
+                            <Col md={4} className='orderscreen__productName'>
+                              Quantity: {item.quantity}
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      ))}
+
+
+                    </ListGroup>
+                  )}
+                </ListGroup.Item> */}
             </ListGroup>
           </Col>
           <Col md={4} className='orderscreen__summary'>
@@ -172,7 +183,7 @@ const OrderScreen = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Total</Col>
-                    <Col>${orderItem.totalPrice}</Col>
+                    <Col>${order.totalPrice}</Col>
                   </Row>
                 </ListGroup.Item>
               </ListGroup>
@@ -185,4 +196,4 @@ const OrderScreen = () => {
   )
 }
 
-export default OrderScreen
+export default PlaceOrderScreen

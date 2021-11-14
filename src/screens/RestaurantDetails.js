@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import { listRestaurantsDetails } from '../redux/actions/restaurantAction'
 import { listMenu } from '../redux/actions/menuAction'
 import MenuList from '../components/MenuList'
@@ -11,12 +11,11 @@ const RestaurantDetails = () => {
   const params = useParams()
   const restaurantId = parseInt(params.id, 10)
 
-  // parseInt('params.id', 10)
-  // params.id
+  const history = useNavigate()
 
   //  Initialize filter state
-  const [data, setData] = useState([])
-  const [filter, setFilter] = useState(data)
+  // const [data, setData] = useState([])
+  // const [filter, setFilter] = useState(data)
 
   // let componentMounted = true
 
@@ -31,42 +30,40 @@ const RestaurantDetails = () => {
   const menuList = useSelector(state => state.menuList)
   const { loading: loadingMenu, error: errorMenu, menus } = menuList
 
-  // const [load, setlLoad] = useState(loadingMenu)
-
   //  Sort the array objects according to ranks
-  filter.sort((a, b) => a.rank - b.rank)
+  menus.sort((a, b) => a.rank - b.rank)
 
   // Fires when the component loads.
   // Dispatch an action to fetch restaurants details and menus list.
   useEffect(() => {
-    if (!loading) {
-      dispatch(listRestaurantsDetails(restaurantId))
-    }
+    //  check an unmounted variable to tell whether
+    //  it should skip the call to setState
+    let componentMounted = true
 
     console.log(parseInt(restaurantId, 10))
     console.log(params)
-
-    //  check an unmounted variable to tell whether
-    //  it should skip the call to setState
-    // let componentMounted = true
+    console.log(history)
 
     const getMenus = async () => {
-      if (!loadingMenu) {
+      console.log(menus)
+      if (componentMounted) {
+        dispatch(listRestaurantsDetails(restaurantId))
         dispatch(listMenu(restaurantId))
-        console.log(menus)
-        setData(menus)
-        setFilter(menus)
+        // setData(menus)
+        // setFilter(menus)
       }
     }
-
     getMenus()
-  }, [dispatch])
+    return () => {
+      componentMounted = false
+    }
+  }, [dispatch, restaurantId])
 
   // Filter menu according to the category
-  const filterMenuHandler = cat => {
-    const updatedList = data.filter(x => x.category === cat)
-    setFilter(updatedList)
-  }
+  // const filterMenuHandler = cat => {
+  //   const updatedList = data.filter(x => x.category === cat)
+  //   setFilter(updatedList)
+  // }
 
   return (
     <div className='container my-5 py-5'>
@@ -83,13 +80,13 @@ const RestaurantDetails = () => {
 
           <div className='row justify-content-center'>
             <CategoryList
-              filterMenuHandler={filterMenuHandler}
+              // filterMenuHandler={filterMenuHandler}
               menus={menus}
-              setFilter={setFilter}
+              // setFilter={setFilter}
             />
             <h2>Menu</h2>
 
-            {filter.map(menu => (
+            {menus.map(menu => (
               <div className='col-md-3 mb-4' key={menu.id}>
                 <MenuList menu={menu} restaurantId={restaurantId} />
               </div>

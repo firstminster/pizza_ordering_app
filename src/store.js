@@ -23,17 +23,18 @@ const reducer = combineReducers({
   cartList: cartReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
-  
 })
 
 const middleware = [thunk]
 
 // InitialState
-const initialState = {}
+// const initialState = {
+
+// }
 
 const store = createStore(
   reducer,
-  initialState,
+  // initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )
 

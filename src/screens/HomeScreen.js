@@ -18,11 +18,10 @@ const Home = () => {
   // Fires when the component loads.
   // Dispatch an action to fetch lists of restaurants.
   useEffect(() => {
-    dispatch(listRestaurants())
-
     // check an unmounted variable to tell whether
     // it should skip the call to setState
     let componentMounted = true
+    // let abortController = new AbortController()
 
     // Function to get the user location
     const getLocation = async () => {
@@ -30,6 +29,8 @@ const Home = () => {
       if (!navigator.geolocation) {
         setStatus('Geolocation is not supported by your browser')
       } else if (componentMounted) {
+        // List restaurants
+        dispatch(listRestaurants())
         setStatus('Locating...')
         // Checks the user's location
         navigator.geolocation.getCurrentPosition(
@@ -45,10 +46,11 @@ const Home = () => {
       }
       return () => {
         componentMounted = false
+        // abortController.abort()
       }
     }
     getLocation()
-  }, [dispatch])
+  }, [dispatch, lat, lng])
 
   return (
     <div>

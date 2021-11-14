@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { useParams } from 'react-router'
-// import { listMenu } from '../redux/actions/menuAction'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { addToCart } from '../redux/actions/cartAction'
 
 const MenuList = ({ menu, restaurantId }) => {
-  // Gets the ID params from the URL
-  // const params = useParams()
-  // const restaurantId = params.id
-
   // calls/invokes an action
   const dispatch = useDispatch()
 
