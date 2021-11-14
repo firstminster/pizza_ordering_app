@@ -11,10 +11,6 @@ import {
 // Create User Order
 export const createOrder = cart => async dispatch => {
   try {
-    // dispatch({
-    //   type: ORDER_CREATE_REQUEST,
-    // })
-
     // Set Headers with content-Type
     const config = {
       headers: {

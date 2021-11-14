@@ -18,33 +18,12 @@ const PlaceOrderScreen = () => {
   // Brings in data from the global state (Redux Store)
   const orderCreate = useSelector(state => state.orderCreate)
   const { loading, order } = orderCreate
-  const cart = useSelector(state => state.cartList)
 
-  // useEffect(() => {
-  //   //  check an unmounted variable to tell whether
-  //   //  it should skip the call to setState
-  //   let componentMounted = true
-
-  //   console.log(order)
-  //   console.log(orderCreate)
-
-  //   const placeOrder = async () => {
-  //     if (componentMounted) {
-  //       if (loading) {
-  //         dispatch(createOrder(1))
-  //       }
-  //     }
-  //   }
-  //   placeOrder()
-  //   return () => {
-  //     componentMounted = false
-  //   }
-  // }, [])
+  //   const cart = useSelector(state => state.cartList)
 
   // Open Order page method
   const openOrderPageHandler = () => {
     history(`/orders/${order.orderId}`)
-    // console.log(order)
   }
 
   return (
