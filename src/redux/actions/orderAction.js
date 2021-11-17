@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {
-  ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_DETAILS_REQUEST,
@@ -19,7 +18,7 @@ export const createOrder = cart => async dispatch => {
     }
 
     const { data } = await axios.post(
-      `https://private-d032a-pizzaapp.apiary-mock.com/orders/`,
+      `${process.env.REACT_APP_API_URL}/orders/`,
       cart,
       config
     )
@@ -29,9 +28,8 @@ export const createOrder = cart => async dispatch => {
       payload: data,
     })
 
-    console.log(cart)
-
-    console.log(data)
+    // console.log(cart)
+    // console.log(data)
   } catch (error) {
     console.log(error.message)
     dispatch({
@@ -49,17 +47,16 @@ export const getOrderDetails = id => async dispatch => {
     })
 
     const { data } = await axios.get(
-      `https://private-d032a-pizzaapp.apiary-mock.com/orders/${id}`
+      `${process.env.REACT_APP_API_URL}/orders/${id}`
     )
 
-    console.log(data)
+    // console.log(data)
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
       payload: data,
     })
   } catch (error) {
-    console.log(error.message)
     dispatch({
       type: ORDER_DETAILS_FAIL,
       payload: error.message,

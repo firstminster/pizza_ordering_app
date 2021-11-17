@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-import { MENU_LIST_REQUEST, MENU_LIST_SUCCESS } from '../constants/menuConstant'
+import {
+  MENU_LIST_REQUEST,
+  MENU_LIST_SUCCESS,
+  MENU_LIST_FAIL,
+} from '../constants/menuConstant'
 
 // List single restaurants menus to user
 export const listMenu = id => async dispatch => {
@@ -10,7 +14,7 @@ export const listMenu = id => async dispatch => {
     })
 
     const { data } = await axios.get(
-      `https://private-d032a-pizzaapp.apiary-mock.com/restaurants/${id}/menu?category=Pizza&orderBy=rank`
+      `${process.env.REACT_APP_API_URL}/restaurants/${id}/menu?category=Pizza&orderBy=rank`
     )
 
     // console.log(data)
@@ -20,5 +24,9 @@ export const listMenu = id => async dispatch => {
     })
   } catch (error) {
     console.log(error.message)
+    dispatch({
+      type: MENU_LIST_FAIL,
+      payload: error.message,
+    })
   }
 }

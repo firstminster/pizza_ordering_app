@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Row, Col, ListGroup, Card } from 'react-bootstrap'
 import Message from '../components/Message'
-import { getOrderDetails } from '../redux/actions/orderAction'
 
 const OrderScreen = () => {
   const [isDelivered, setIsDelivered] = useState(true)
   const [isPaid, setIsPaid] = useState(true)
 
-  // calls/invokes an action
-  const dispatch = useDispatch()
-
   // Brings in data from the global state (Redux Store)
   const orderDetails = useSelector(state => state.orderDetails)
-  const { loading, orderItem } = orderDetails
+  const { orderItem } = orderDetails
 
   return (
     <div className='container my-5 py-5'>
@@ -42,7 +37,6 @@ const OrderScreen = () => {
               </p>
               <p>
                 <strong>Email: </strong> prouduser@test.com
-                {/* <a href={`mailto:${order.user.email}`}>{order.user.email}</a> */}
               </p>
               <p>
                 <strong>Address:</strong> Lantmannavägen 111, Stockholm, 46160,
@@ -78,18 +72,9 @@ const OrderScreen = () => {
                   {orderDetails.orderItem.cart.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
-                        <Col md={1}>
-                          {/* <Image
-                            src={'item.image'}
-                            alt={'item.name'}
-                            fluid
-                            rounded
-                          /> */}
-                        </Col>
+                        <Col md={1}></Col>
                         <Col className='orderscreen__productName'>
                           Menu item: {item.menuItemId}
-                          {/* <Link to={`/restaurant/${item.menuItemId}`}> */}
-                          {/* </Link> */}
                         </Col>
                         <Col md={4} className='orderscreen__productName'>
                           Quantity: {item.quantity}

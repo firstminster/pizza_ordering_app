@@ -4,6 +4,8 @@ import {
   RESTAURANT_LIST_SUCCESS,
   RESTAURANT_DETAILS_REQUEST,
   RESTAURANT_DETAILS_SUCCESS,
+  RESTAURANT_DETAILS_FAIL,
+  RESTAURANT_LIST_FAIL,
 } from '../constants/restaurantConstants'
 
 // List all restaurants to users
@@ -14,7 +16,7 @@ export const listRestaurants = () => async dispatch => {
     })
 
     const { data } = await axios.get(
-      `https://private-d032a-pizzaapp.apiary-mock.com/restaurants/`
+      `${process.env.REACT_APP_API_URL}/restaurants/`
     )
 
     dispatch({
@@ -22,7 +24,10 @@ export const listRestaurants = () => async dispatch => {
       payload: data,
     })
   } catch (error) {
-    console.log(error.message)
+    dispatch({
+      type: RESTAURANT_LIST_FAIL,
+      payload: error.message,
+    })
   }
 }
 
@@ -34,7 +39,7 @@ export const listRestaurantsDetails = id => async dispatch => {
     })
 
     const { data } = await axios.get(
-      `https://private-d032a-pizzaapp.apiary-mock.com/restaurants/${id}`
+      `${process.env.REACT_APP_API_URL}/restaurants/${id}`
     )
     // console.log(data)
     dispatch({
@@ -42,6 +47,9 @@ export const listRestaurantsDetails = id => async dispatch => {
       payload: data,
     })
   } catch (error) {
-    console.log(error.message)
+    dispatch({
+      type: RESTAURANT_DETAILS_FAIL,
+      payload: error.message,
+    })
   }
 }

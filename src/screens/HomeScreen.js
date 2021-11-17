@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listRestaurants } from '../redux/actions/restaurantAction'
 import RestaurantCard from '../components/RestaurantCard'
+import Geocode from 'react-geocode'
 
 const Home = () => {
   const [lat, setLat] = useState(null)
@@ -11,15 +12,16 @@ const Home = () => {
   // calls/invokes an action
   const dispatch = useDispatch()
 
-  //  pulls out data from the Global state: rrestuarants-lists State(in the store.js)
+  // pulls out data from the Global state: rrestuarants-lists State(in the store.js)
   const restaurantList = useSelector(state => state.restaurantList)
-  const { loading, error, restaurants } = restaurantList
+  const { restaurants } = restaurantList
 
   // Fires when the component loads.
   // Dispatch an action to fetch lists of restaurants.
   useEffect(() => {
     console.log(lng)
     console.log(lat)
+
     // check an unmounted variable to tell whether
     // it should skip the call to setState
     let componentMounted = true
@@ -53,6 +55,34 @@ const Home = () => {
     }
     getLocation()
   }, [dispatch, lat, lng])
+
+  // // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+  // Geocode.setApiKey(
+  //   'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDFjl8OAvMe_SpjPc7lOE0mgf3NnF7wkTo'
+  // )
+
+  // // set response language. Defaults to english.
+  // Geocode.setLanguage('en')
+
+  // // set response region. Its optional.
+  // // A Geocoding request with region=es (Spain) will return the Spanish city.
+  // Geocode.setRegion('sv')
+
+  // Geocode.setLocationType('ROOFTOP')
+
+  // // Enable or disable logs. Its optional.
+  // Geocode.enableDebug()
+
+  // // Get address from latitude & longitude.
+  // Geocode.fromLatLng(lat, lng).then(
+  //   response => {
+  //     const address = response.results[0].formatted_address
+  //     console.log(address)
+  //   },
+  //   error => {
+  //     console.error(error)
+  //   }
+  // )
 
   return (
     <div>

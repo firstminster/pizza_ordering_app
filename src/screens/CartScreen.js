@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, NavLink } from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
-import { addToCart, removeFromCart } from '../redux/actions/cartAction'
+import { Row, Col, ListGroup, Form, Button, Card } from 'react-bootstrap'
+import { removeFromCart, resetCart } from '../redux/actions/cartAction'
 import { createOrder, getOrderDetails } from '../redux/actions/orderAction'
 
 const CartScreen = () => {
-  // Gets the ID params from the URL
-  //  const params = useParams()
-  //  const restaurantId = parseInt(params.id, 10)
-
+  // Navigate
   let history = useNavigate()
 
   // calls/invokes an action
@@ -29,6 +26,7 @@ const CartScreen = () => {
     dispatch(createOrder(cartList))
     dispatch(getOrderDetails())
     history(`/order`)
+    dispatch(resetCart())
   }
 
   return (
@@ -142,8 +140,3 @@ const CartScreen = () => {
 }
 
 export default CartScreen
-
-// {cart.reduce(
-//   (counter, { id }) => (id ? (counter += 1)  : counter),
-//   0
-// )}

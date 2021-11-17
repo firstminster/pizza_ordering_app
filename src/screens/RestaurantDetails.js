@@ -11,13 +11,12 @@ const RestaurantDetails = () => {
   const params = useParams()
   const restaurantId = parseInt(params.id, 10)
 
-  const history = useNavigate()
+  // Navigate
+  // const history = useNavigate()
 
   //  Initialize filter state
   // const [data, setData] = useState([])
   // const [filter, setFilter] = useState(data)
-
-  // let componentMounted = true
 
   // calls/invokes an action
   const dispatch = useDispatch()
@@ -39,10 +38,6 @@ const RestaurantDetails = () => {
     //  check an unmounted variable to tell whether
     //  it should skip the call to setState
     let componentMounted = true
-
-    console.log(parseInt(restaurantId, 10))
-    console.log(params)
-    console.log(history)
 
     const getMenus = async () => {
       console.log(menus)

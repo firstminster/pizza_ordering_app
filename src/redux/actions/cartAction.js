@@ -1,13 +1,8 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstant'
-// import axios from 'axios'
-
-// item: {
-//   menuItemId: menu.id,
-//   name: menu.name,
-//   category: menu.category,
-//   price: menu.price,
-//   qty: 1,
-// },
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_RESET,
+} from '../constants/cartConstant'
 
 // Add Item to cart
 export const addToCart = (restaurantId, menu) => async dispatch => {
@@ -24,7 +19,7 @@ export const addToCart = (restaurantId, menu) => async dispatch => {
       },
     })
 
-    console.log(menu)
+    // console.log(menu)
   } catch (error) {
     console.log(error.message)
   }
@@ -42,18 +37,9 @@ export const removeFromCart = id => dispatch => {
   // Re-set the cart items in the localStorage
 }
 
-// {
-//     menuItemId: menuData.id,
-//     name: menuData.name,
-//     price: menuData.price,
-//     category: menuData.category,
-//     restuarantId: restaurantData.id,
-//   },
-
-//   const { data } = await axios.get(
-//     `https://private-d032a-pizzaapp.apiary-mock.com/restaurants/${restaurantId}`
-//   )
-
-//   const { data } = await axios.get(
-//     `https://private-d032a-pizzaapp.apiary-mock.com/restaurants/${menuId}/menu?category=Pizza&orderBy=rank`
-//   )
+// Reset or Empty the cart
+export const resetCart = () => dispatch => {
+  dispatch({
+    type: CART_RESET,
+  })
+}

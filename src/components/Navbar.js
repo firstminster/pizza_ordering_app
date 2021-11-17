@@ -40,19 +40,6 @@ function Navbar() {
                   Home
                 </NavLink>
               </li>
-
-              {/* <li className='nav-item'>
-                <NavLink
-                  className='nav-link'
-                  to='/orders/:id'
-                  style={{
-                    fontSize: '20px',
-                    color: 'black',
-                  }}
-                >
-                  Orders
-                </NavLink>
-              </li> */}
             </ul>
             <div className='buttons'>
               <NavLink to='/cart' className='btn btn-outline-dark ms-2'>

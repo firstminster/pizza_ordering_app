@@ -2,7 +2,6 @@ import {
   MENU_LIST_REQUEST,
   MENU_LIST_SUCCESS,
   MENU_LIST_FAIL,
-  // MENU_FILTER_SUCCESS,
 } from '../constants/menuConstant'
 
 // List all restaurants menus to user
@@ -18,18 +17,3 @@ export const menuListReducer = (state = { menus: [] }, action) => {
       return state
   }
 }
-
-// Filter the menu list to user
-// export const menuFilterReducer = (state = { filtered: [] }, action) => {
-//   switch (action.payload) {
-//     case MENU_FILTER_SUCCESS:
-//       const menus = action.payload.data
-//       return {
-//         ...state,
-//         filtered: menus.filter(x => x.category === action.payload.category),
-//       }
-
-//     default:
-//       return state
-//   }
-// }
