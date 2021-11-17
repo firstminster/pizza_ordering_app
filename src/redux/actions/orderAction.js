@@ -28,7 +28,7 @@ export const createOrder = cart => async dispatch => {
       payload: data,
     })
 
-    // console.log(cart)
+    console.log(cart)
     // console.log(data)
   } catch (error) {
     console.log(error.message)

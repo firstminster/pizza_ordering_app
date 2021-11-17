@@ -13,7 +13,7 @@ A web app built with ReactJs, Redux & consumed an external API.
 - List all restaurants.
 - Get the User location (Geo-locations & Coordinators)
 - List single restaurant & Menu list.
-- Add Menu items to cart.
+- Add Menu items to cart (Also, set items to localStorage).
 - Delete cart items
 - place Order
 - View Ordered items.
