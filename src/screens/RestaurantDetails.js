@@ -14,10 +14,6 @@ const RestaurantDetails = () => {
   // Navigate
   // const history = useNavigate()
 
-  //  Initialize filter state
-  // const [data, setData] = useState([])
-  // const [filter, setFilter] = useState(data)
-
   // calls/invokes an action
   const dispatch = useDispatch()
 
@@ -52,7 +48,7 @@ const RestaurantDetails = () => {
     return () => {
       componentMounted = false
     }
-  }, [dispatch, restaurantId])
+  }, [])
 
   // Filter menu according to the category
   // const filterMenuHandler = cat => {

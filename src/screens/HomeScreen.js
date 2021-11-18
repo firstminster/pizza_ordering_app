@@ -8,6 +8,11 @@ const Home = () => {
   const [lat, setLat] = useState(null)
   const [lng, setLng] = useState(null)
   const [status, setStatus] = useState(null)
+  const [userAddress, setUserAddress] = useState(null)
+
+  // const [cityShow, setCity] = useState(null)
+  // const [stateShow, setState] = useState(null)
+  // const [postalCodeShow, setPostalCode] = useState(null)
 
   // calls/invokes an action
   const dispatch = useDispatch()
@@ -16,16 +21,13 @@ const Home = () => {
   const restaurantList = useSelector(state => state.restaurantList)
   const { restaurants } = restaurantList
 
-  // Fires when the component loads.
-  // Dispatch an action to fetch lists of restaurants.
   useEffect(() => {
-    console.log(lng)
-    console.log(lat)
+    // List restaurants
+    dispatch(listRestaurants())
 
     // check an unmounted variable to tell whether
     // it should skip the call to setState
     let componentMounted = true
-    // let abortController = new AbortController()
 
     // Function to get the user location
     const getLocation = async () => {
@@ -33,8 +35,6 @@ const Home = () => {
       if (!navigator.geolocation) {
         setStatus('Geolocation is not supported by your browser')
       } else if (componentMounted) {
-        // List restaurants
-        dispatch(listRestaurants())
         setStatus('Locating...')
         // Checks the user's location
         navigator.geolocation.getCurrentPosition(
@@ -46,43 +46,28 @@ const Home = () => {
           () => {
             setStatus('Unable to retrieve your location')
           }
-        )
-      }
-      return () => {
-        componentMounted = false
-        // abortController.abort()
+        ) // Passing in a success callback and an error callback fn
       }
     }
+
     getLocation()
-  }, [dispatch, lat, lng])
+    // reverseGeocodeCoordinates()
+    return () => {
+      componentMounted = false
+    }
+  }, [])
 
-  // // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-  // Geocode.setApiKey(
-  //   'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDFjl8OAvMe_SpjPc7lOE0mgf3NnF7wkTo'
-  // )
+  // const reverseGeocodeCoordinates = async () => {
+  //   fetch(
+  //     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+  //   )
+  //     .then(response => response.json())
+  //     .then(data => setUserAddress(data.results[0].formatted_address))
+  //     .catch(error => console.log(error))
+  // }
 
-  // // set response language. Defaults to english.
-  // Geocode.setLanguage('en')
-
-  // // set response region. Its optional.
-  // // A Geocoding request with region=es (Spain) will return the Spanish city.
-  // Geocode.setRegion('sv')
-
-  // Geocode.setLocationType('ROOFTOP')
-
-  // // Enable or disable logs. Its optional.
-  // Geocode.enableDebug()
-
-  // // Get address from latitude & longitude.
-  // Geocode.fromLatLng(lat, lng).then(
-  //   response => {
-  //     const address = response.results[0].formatted_address
-  //     console.log(address)
-  //   },
-  //   error => {
-  //     console.error(error)
-  //   }
-  // )
+  console.log(lat)
+  console.log(lng)
 
   return (
     <div>
@@ -108,6 +93,14 @@ const Home = () => {
         <div className='container my-5 py-5'>
           <div className='row'>
             <div className='col-12 mb-5'>
+              {lat && lng ? (
+                <div>
+                  <h4>Current Location:</h4>
+                  <p>
+                    Address: {lat} | {lng}
+                  </p>
+                </div>
+              ) : null}
               <h1 className='display-6 fw-bolder text-center'>Restaurants</h1>
               <hr />
             </div>
