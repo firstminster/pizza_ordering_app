@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { listRestaurants } from '../redux/actions/restaurantAction'
 import RestaurantCard from '../components/RestaurantCard'
 import Geocode from 'react-geocode'
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom/cjs/react-dom.development'
 
 const Home = () => {
   const [lat, setLat] = useState(null)
@@ -97,7 +98,7 @@ const Home = () => {
                 <div>
                   <h4>Current Location:</h4>
                   <p>
-                    Address: {lat} | {lng}
+                    Coordinates: {lat} | {lng}
                   </p>
                 </div>
               ) : null}
@@ -105,13 +106,24 @@ const Home = () => {
               <hr />
             </div>
           </div>
-
+          {/* 58.2719583 | 12.2895698 */}
           <div className='row justify-content-center'>
-            {restaurants.map(restaurant => (
-              <div className='col-md-3 mb-4' key={restaurant.id}>
-                <RestaurantCard restaurant={restaurant} />
-              </div>
-            ))}
+            {lat !== 59.336078 && lng !== 18.071807
+              ? restaurants.map(restaurant => (
+                  <div className='col-md-3 mb-4' key={restaurant.id}>
+                    <RestaurantCard restaurant={restaurant} />
+                  </div>
+                ))
+              : restaurants.filter(
+                  restaurant =>
+                    restaurant.latitude === lat &&
+                    restaurant.longitude ===
+                      lng(
+                        <div className='col-md-3 mb-4' key={restaurant.id}>
+                          <RestaurantCard restaurant={restaurant} />
+                        </div>
+                      )
+                )}
           </div>
         </div>
       </div>
