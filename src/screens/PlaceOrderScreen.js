@@ -5,18 +5,19 @@ import { Button, Row, Col, ListGroup, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 
 const PlaceOrderScreen = () => {
-  // Initialize the state
+  // Initialize the component state
   const [isDelivered, setIsDelivered] = useState(true)
   const [isPaid, setIsPaid] = useState(true)
 
+  // Navigate hook
   let history = useNavigate()
 
   // Brings in data from the global state (Redux Store)
   const orderCreate = useSelector(state => state.orderCreate)
   const { order } = orderCreate
 
-  // Open Order page method
-  const openOrderPageHandler = () => {
+  // View Order function
+  const viewOrdersHandler = () => {
     history(`/orders/${order.orderId}`)
   }
 
@@ -35,7 +36,7 @@ const PlaceOrderScreen = () => {
           <Button
             type='button'
             className='btn-block'
-            onClick={() => openOrderPageHandler()}
+            onClick={() => viewOrdersHandler()}
           >
             Click Me!
           </Button>{' '}

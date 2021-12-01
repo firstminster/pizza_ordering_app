@@ -4,7 +4,7 @@ import {
   CART_RESET_ITEM,
 } from '../constants/cartConstant'
 
-// Add Item to cart
+// Add Item to cart (Action creator)
 export const addToCart = (restaurantId, menu) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -18,8 +18,6 @@ export const addToCart = (restaurantId, menu) => async (dispatch, getState) => {
         restaurantId,
       },
     })
-
-    // console.log(menu)
   } catch (error) {
     console.log(error.message)
   }
@@ -28,7 +26,7 @@ export const addToCart = (restaurantId, menu) => async (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cartList.cart))
 }
 
-// Remove item from cart
+// Remove item from cart (Action creator)
 export const removeFromCart = id => (dispatch, getState) => {
   dispatch({
     type: CART_REMOVE_ITEM,
@@ -39,7 +37,7 @@ export const removeFromCart = id => (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cartList.cart))
 }
 
-// Reset or Empty the cart
+// Reset or Empty the cart (Action creator)
 export const resetCart = () => (dispatch, getState) => {
   dispatch({
     type: CART_RESET_ITEM,

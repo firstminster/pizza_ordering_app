@@ -30,8 +30,8 @@ const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
 
+// Store InitialState
 // Add the retrieved values to the initialState
-// InitialState
 const initialState = {
   cartList: {
     cart: cartItemsFromStorage,

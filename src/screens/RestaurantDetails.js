@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, useNavigate } from 'react-router'
+import { useParams } from 'react-router'
 import { listRestaurantsDetails } from '../redux/actions/restaurantAction'
 import { listMenu } from '../redux/actions/menuAction'
 import MenuList from '../components/MenuList'
@@ -11,50 +11,28 @@ const RestaurantDetails = () => {
   const params = useParams()
   const restaurantId = parseInt(params.id, 10)
 
-  // Navigate
-  // const history = useNavigate()
-
   // calls/invokes an action
   const dispatch = useDispatch()
 
   //  pulls out data from the Global state: restaurant-details State(in the store.js)
   const restaurantDetails = useSelector(state => state.restaurantDetails)
-  const { loading, error, restaurant } = restaurantDetails
+  const { restaurant } = restaurantDetails
 
   //  pulls out data from the Global state: menu-list State(in the store.js)
   const menuList = useSelector(state => state.menuList)
-  const { loading: loadingMenu, error: errorMenu, menus } = menuList
+  const { menus } = menuList
 
   //  Sort the array objects according to ranks
   menus.sort((a, b) => a.rank - b.rank)
 
-  // Fires when the component loads.
-  // Dispatch an action to fetch restaurants details and menus list.
+  // Fires or Creates a side-effects when the component loads.
   useEffect(() => {
-    //  check an unmounted variable to tell whether
-    //  it should skip the call to setState
-    let componentMounted = true
+    // Dispatch an action to fetch restaurants details and menus list.
+    dispatch(listRestaurantsDetails(restaurantId))
+    dispatch(listMenu(restaurantId))
 
-    const getMenus = async () => {
-      console.log(menus)
-      if (componentMounted) {
-        dispatch(listRestaurantsDetails(restaurantId))
-        dispatch(listMenu(restaurantId))
-        // setData(menus)
-        // setFilter(menus)
-      }
-    }
-    getMenus()
-    return () => {
-      componentMounted = false
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // Filter menu according to the category
-  // const filterMenuHandler = cat => {
-  //   const updatedList = data.filter(x => x.category === cat)
-  //   setFilter(updatedList)
-  // }
 
   return (
     <div className='container my-5 py-5'>
@@ -71,8 +49,8 @@ const RestaurantDetails = () => {
 
           <div className='row justify-content-center'>
             <CategoryList
-              // filterMenuHandler={filterMenuHandler}
               menus={menus}
+              // filterMenuHandler={filterMenuHandler}
               // setFilter={setFilter}
             />
             <h2>Menu</h2>
@@ -90,3 +68,28 @@ const RestaurantDetails = () => {
 }
 
 export default RestaurantDetails
+
+// Navigate
+// const history = useNavigate()
+
+// Filter menu according to the category
+// const filterMenuHandler = cat => {
+//   const updatedList = data.filter(x => x.category === cat)
+//   setFilter(updatedList)
+// }
+
+//  check an unmounted variable to tell whether
+//  it should skip the call to setState
+// let componentMounted = true
+
+// const getMenus = async () => {
+//   // console.log(menus)
+//   if (componentMounted) {
+//     // setData(menus)
+//     // setFilter(menus)
+//   }
+// }
+// getMenus()
+// return () => {
+//   componentMounted = false
+// }

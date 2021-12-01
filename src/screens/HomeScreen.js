@@ -2,28 +2,22 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listRestaurants } from '../redux/actions/restaurantAction'
 import RestaurantCard from '../components/RestaurantCard'
-import Geocode from 'react-geocode'
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom/cjs/react-dom.development'
 
 const Home = () => {
   const [lat, setLat] = useState(null)
   const [lng, setLng] = useState(null)
   const [status, setStatus] = useState(null)
-  const [userAddress, setUserAddress] = useState(null)
 
-  // const [cityShow, setCity] = useState(null)
-  // const [stateShow, setState] = useState(null)
-  // const [postalCodeShow, setPostalCode] = useState(null)
-
-  // calls/invokes an action
+  // calls/Invokes an action
   const dispatch = useDispatch()
 
   // pulls out data from the Global state: rrestuarants-lists State(in the store.js)
   const restaurantList = useSelector(state => state.restaurantList)
   const { restaurants } = restaurantList
 
+  // Fires or Creates a side-effects when the component loads.
   useEffect(() => {
-    // List restaurants
+    // Dispatch an action to fetch restaurants list.
     dispatch(listRestaurants())
 
     // check an unmounted variable to tell whether
@@ -47,7 +41,7 @@ const Home = () => {
           () => {
             setStatus('Unable to retrieve your location')
           }
-        ) // Passing in a success callback and an error callback fn
+        ) // Passing in a success callback and an error callback function
       }
     }
 
@@ -56,19 +50,11 @@ const Home = () => {
     return () => {
       componentMounted = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // const reverseGeocodeCoordinates = async () => {
-  //   fetch(
-  //     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
-  //   )
-  //     .then(response => response.json())
-  //     .then(data => setUserAddress(data.results[0].formatted_address))
-  //     .catch(error => console.log(error))
-  // }
-
-  console.log(lat)
-  console.log(lng)
+  // console.log(lat)
+  // console.log(lng)
 
   return (
     <div>
@@ -90,41 +76,32 @@ const Home = () => {
       </div>
 
       {/* Lists of each resturants */}
-      <div>
-        <div className='container my-5 py-5'>
-          <div className='row'>
-            <div className='col-12 mb-5'>
-              {lat && lng ? (
-                <div>
-                  <h4>Current Location:</h4>
-                  <p>
-                    Coordinates: {lat} | {lng}
-                  </p>
-                </div>
-              ) : null}
-              <h1 className='display-6 fw-bolder text-center'>Restaurants</h1>
-              <hr />
-            </div>
+      <div className='container my-5 py-5'>
+        <div className='row'>
+          <div className='col-12 mb-5'>
+            {lat && lng ? (
+              <div>
+                <h4>Current Location:</h4>
+                <p>
+                  Coordinates: Lat({lat}) | Lng({lng})
+                </p>
+              </div>
+            ) : null}
+            <h1 className='display-6 fw-bolder text-center'>Restaurants</h1>
+            <hr />
           </div>
-          {/* 58.2719583 | 12.2895698 */}
-          <div className='row justify-content-center'>
-            {lat !== 59.336078 && lng !== 18.071807
-              ? restaurants.map(restaurant => (
-                  <div className='col-md-3 mb-4' key={restaurant.id}>
-                    <RestaurantCard restaurant={restaurant} />
-                  </div>
-                ))
-              : restaurants.filter(
-                  restaurant =>
-                    restaurant.latitude === lat &&
-                    restaurant.longitude ===
-                      lng(
-                        <div className='col-md-3 mb-4' key={restaurant.id}>
-                          <RestaurantCard restaurant={restaurant} />
-                        </div>
-                      )
-                )}
-          </div>
+        </div>
+        {/* 58.2719583 | 12.2895698 */}
+        <div className='row justify-content-center'>
+          {lat && lng ? (
+            restaurants.map(restaurant => (
+              <div className='col-md-3 mb-4' key={restaurant.id}>
+                <RestaurantCard restaurant={restaurant} />
+              </div>
+            ))
+          ) : (
+            <h1>{status}</h1>
+          )}
         </div>
       </div>
     </div>
@@ -132,3 +109,12 @@ const Home = () => {
 }
 
 export default Home
+
+// const reverseGeocodeCoordinates = async () => {
+//   fetch(
+//     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+//   )
+//     .then(response => response.json())
+//     .then(data => setUserAddress(data.results[0].formatted_address))
+//     .catch(error => console.log(error))
+// }

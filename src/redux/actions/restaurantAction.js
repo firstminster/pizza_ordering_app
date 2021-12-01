@@ -8,7 +8,7 @@ import {
   RESTAURANT_LIST_FAIL,
 } from '../constants/restaurantConstants'
 
-// List all restaurants to users
+// List all restaurants to users (Action creator)
 export const listRestaurants = () => async dispatch => {
   try {
     dispatch({
@@ -31,7 +31,7 @@ export const listRestaurants = () => async dispatch => {
   }
 }
 
-// List a single restaurant to users
+// List a single restaurant to users (Action creator)
 export const listRestaurantsDetails = id => async dispatch => {
   try {
     dispatch({
@@ -41,7 +41,7 @@ export const listRestaurantsDetails = id => async dispatch => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/restaurants/${id}`
     )
-    // console.log(data)
+
     dispatch({
       type: RESTAURANT_DETAILS_SUCCESS,
       payload: data,

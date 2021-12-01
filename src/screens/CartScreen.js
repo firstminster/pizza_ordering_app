@@ -6,7 +6,7 @@ import { removeFromCart, resetCart } from '../redux/actions/cartAction'
 import { createOrder, getOrderDetails } from '../redux/actions/orderAction'
 
 const CartScreen = () => {
-  // Navigate
+  // Navigate hook
   let history = useNavigate()
 
   // calls/invokes an action
@@ -16,14 +16,14 @@ const CartScreen = () => {
   const cartList = useSelector(state => state.cartList)
   const { cart } = cartList
 
-  // Remove Item from cart method/fuction
+  // Remove Item from cart function
   const removeFromCartHandler = id => {
     dispatch(removeFromCart(id))
   }
 
-  // Place Order method
+  // Place Order function
   const placeOrderHandler = () => {
-    dispatch(createOrder(cartList))
+    dispatch(createOrder(cart))
     dispatch(getOrderDetails())
     history(`/order`)
     dispatch(resetCart())
@@ -108,11 +108,7 @@ const CartScreen = () => {
               <ListGroup.Item>
                 <h2>
                   Subtotal (
-                  {cart.reduce(
-                    (counter, item) => (item ? counter + item.qty : counter),
-                    0
-                  )}
-                  ) items
+                  {cart.reduce((counter, item) => counter + item.qty, 0)}) items
                 </h2>
                 <h4>
                   ${' '}

@@ -7,13 +7,13 @@ import {
   ORDER_DETAILS_FAIL,
 } from '../constants/orderConstants'
 
-// Create User Order
+// Create User Order (Action creator)
 export const createOrder = cart => async dispatch => {
   try {
     // Set Headers with content-Type
     const config = {
       headers: {
-        'Content-Typee': 'application/json',
+        'Content-Type': 'application/json',
       },
     }
 
@@ -28,10 +28,8 @@ export const createOrder = cart => async dispatch => {
       payload: data,
     })
 
-    console.log(cart)
-    // console.log(data)
+    // console.log(cart)
   } catch (error) {
-    console.log(error.message)
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload: error.message,
@@ -39,7 +37,7 @@ export const createOrder = cart => async dispatch => {
   }
 }
 
-// Get User Order Details
+// Get User Order Details (Action creator)
 export const getOrderDetails = id => async dispatch => {
   try {
     dispatch({
@@ -49,8 +47,6 @@ export const getOrderDetails = id => async dispatch => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_API_URL}/orders/${id}`
     )
-
-    // console.log(data)
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,

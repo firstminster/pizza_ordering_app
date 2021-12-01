@@ -4,24 +4,19 @@ import {
   CART_RESET_ITEM,
 } from '../constants/cartConstant'
 
-// Initial the cart state
+// Initial cart state
 const initialState = {
   cart: [],
 }
 
+// Cart item reducer
 export const cartReducer = (state = initialState, action) => {
-  // let cartItems = state.cartItems
-
   switch (action.type) {
     case CART_ADD_ITEM:
       const menuItem = action.payload
 
-      // console.log(menuItem)
-
       // Check if a menu already exist
       const existItem = state.cart.find(x => x.id === menuItem.id)
-
-      // console.log(existItem)
 
       if (existItem) {
         // Increase the Quantity
